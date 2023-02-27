@@ -18,6 +18,7 @@ class GetSessionInfoListUseCase(private val repository: SessionRepository) {
         tracks: Set<Track> = setOf(),
         companies: Set<Company> = setOf(),
         day: SessionDay = SessionDay.Null,
+        isFavorite: Boolean = false,
     ): ApiResult<List<SessionInfo>>? {
         if (result == null) {
             result = repository.getSessions()
@@ -53,6 +54,9 @@ class GetSessionInfoListUseCase(private val repository: SessionRepository) {
                         }
                         if (day != SessionDay.Null) {
                             temp = temp && it.sessionDay == day
+                        }
+                        if (isFavorite) {
+                            temp = temp && it.isLiked
                         }
                         temp
                     }

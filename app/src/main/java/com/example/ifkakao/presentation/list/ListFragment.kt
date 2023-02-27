@@ -134,6 +134,9 @@ class ListFragment : Fragment() {
                             }
                         )
                     )
+                    binding.favoriteButton.setImageResource(
+                        if (state.isFavorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                    )
                 }
             }
         }
@@ -188,6 +191,10 @@ class ListFragment : Fragment() {
 
         binding.floatingUpButton.setOnClickListener {
             binding.sessionRecyclerView.smoothScrollToPosition(0)
+        }
+
+        binding.favoriteButton.setOnClickListener {
+            viewModel.setResetIsFavorite()
         }
 
         // safe args로 넘겨준 값 바탕으로 세팅

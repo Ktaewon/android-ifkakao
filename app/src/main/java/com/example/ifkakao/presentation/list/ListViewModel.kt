@@ -46,6 +46,7 @@ class ListViewModel @Inject constructor(
                 types = sessionState.value.types,
                 companies = sessionState.value.companies,
                 day = sessionState.value.day,
+                isFavorite = sessionState.value.isFavorite,
             )
             when (result) {
                 is ApiSuccess -> {
@@ -118,6 +119,12 @@ class ListViewModel @Inject constructor(
         )
     }
 
+    fun setResetIsFavorite() {
+        _sessionState.value = sessionState.value.copy(
+            isFavorite = !sessionState.value.isFavorite
+        )
+    }
+
     // 좋아요 확장 함수
     fun sessionLike(sessionInfo: SessionInfo) = viewModelScope.launch {
         likeUseCaseBundle.insertLikeUseCase(Like(sessionInfo.id))
@@ -134,6 +141,7 @@ data class SessionState(
     val tracks: Set<Track> = setOf(),
     val companies: Set<Company> = setOf(),
     val day: SessionDay = SessionDay.Null,
+    val isFavorite: Boolean = false,
 )
 
 data class SessionData(
